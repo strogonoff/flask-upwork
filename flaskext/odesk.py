@@ -1,3 +1,12 @@
+"""
+Flask-oDesk
+-----------
+Adds oDesk API support to Flask.
+
+flask-odesk version 0.4.1
+(C) 2011 oDesk
+"""
+
 from __future__ import absolute_import
 from functools import wraps
 from flask import Flask, Module, request, redirect, session, flash, url_for, current_app

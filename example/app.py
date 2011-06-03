@@ -17,7 +17,8 @@ def home():
 def team():
     c = odesk.get_client()
     teamrooms = c.team.get_teamrooms_2()
-    teams = [t for t in teamrooms if not t.update({'snapshots': c.team.get_snapshots_2(t.get('id'), online='all')})]
+    teams = [t for t in teamrooms if not t.update({'snapshots':\
+        c.team.get_snapshots_2(t.get('id'), online='all')})]
     return render_template('team.html', teams=teams)
 
 
