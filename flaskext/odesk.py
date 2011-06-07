@@ -83,6 +83,15 @@ def after_login(f):
 odesk.after_login = after_login
 
 
+def after_logout(f):
+    """
+    Decorator that indicates function, which will be called after log out
+    """
+    odesk.after_logout_func = f
+    return f
+odesk.after_logout = after_logout
+
+
 @odesk.route('/login')
 def login(next=None):
     """
@@ -114,7 +123,7 @@ def complete():
         if not userteams.intersection(authteams):
             return "Access for your team is denied", 401
     session[ODESK_ACCESS_TOKEN] = access_token
-    if hasattr(odesk, 'after_login_func'):
+    if callable(getattr(odesk, 'after_login_func', None)):
         odesk.after_login_func()
     flash("You were logged in")
     return redirect(request.args.get('next', '/'))
@@ -126,6 +135,8 @@ def log_out():
     """
     if ODESK_ACCESS_TOKEN in session:
         del session[ODESK_ACCESS_TOKEN]
+    if callable(getattr(odesk, 'after_logout_func', None)):
+        odesk.after_logout_func()
 odesk.logout = log_out
 
 
