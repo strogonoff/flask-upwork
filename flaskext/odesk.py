@@ -121,7 +121,9 @@ def complete():
         c.oauth_access_token, c.oauth_access_token_secret = access_token
         userteams = set(team['id'] for team in c.hr.get_teams())
         if not userteams.intersection(authteams):
-            return "Access for your team is denied", 401
+            authusers = current_app.config.get('ODESK_AUTH_USERS', ())
+            if not c.hr.get_user('me')['id'] in authusers:
+                return "Access for you is denied", 401
     session[ODESK_ACCESS_TOKEN] = access_token
     if callable(getattr(odesk, 'after_login_func', None)):
         odesk.after_login_func()
