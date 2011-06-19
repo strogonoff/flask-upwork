@@ -5,10 +5,7 @@ LICENSE
 Makefile
 conf.py
 setup.py
-changelog.rst
-getting_started.rst
 index.rst
-license.rst
 tests.py
 flaskext/__init__.py
 flaskext/odesk.py
