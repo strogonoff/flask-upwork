@@ -93,8 +93,8 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  Major themes that come with
 # Sphinx are currently 'default' and 'sphinxdoc'.
-sys.path.append(os.path.abspath('_themes'))
-html_theme_path = ['_themes']
+sys.path.append(os.path.abspath('../flask-sphinx-themes'))
+html_theme_path = ['../flask-sphinx-themes']
 html_theme = 'flask_small'
 
 # Theme options are theme-specific and customize the look and feel of a theme
