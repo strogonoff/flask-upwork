@@ -8,7 +8,7 @@ flask-odesk version 0.4.1
 """
 __import__('pkg_resources').declare_namespace(__name__)
 
-VERSION = (0, 4, 1, 'final', 5)
+VERSION = (0, 4, 1, 'beta', 5)
 
 def get_version():
     version = '%s.%s' % (VERSION[0], VERSION[1])
