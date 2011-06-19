@@ -21,12 +21,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="Flask-oDesk v0.4.1 beta 5 documentation" href="#" />
-    <link rel="next" title="Flask-oDesk" href="getting_started.html" />
-   
-  
-  <link media="only screen and (max-device-width: 480px)" href="static/small_flask.css" type= "text/css" rel="stylesheet" />
-
+    <link rel="top" title="Flask-oDesk v0.4.1 beta 5 documentation" href="#" /> 
   </head>
   <body>
   
@@ -34,18 +29,6 @@
   <div class=indexwrapper>
   
 
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="getting_started.html" title="Flask-oDesk"
-             accesskey="N">next</a> |</li>
-        <li><a href="#">Flask-oDesk v0.4.1 beta 5 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -54,27 +37,138 @@
             
   <div class="section" id="flask-odesk">
 <h1>Flask-oDesk<a class="headerlink" href="#flask-odesk" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="flask-odesk-is-the-library-to-use-odesk-api-inside-flask-applications">
-<h2>Flask-oDesk is the library to use oDesk API inside Flask applications<a class="headerlink" href="#flask-odesk-is-the-library-to-use-odesk-api-inside-flask-applications" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Flask-oDesk</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#authorization">Authorization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started.html#using-client">Using client</a></li>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><cite>flask</cite></li>
+<li><cite>python-odesk</cite></li>
+<li><cite>python-oauth2</cite></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-0-4-1">Version 0.4.1</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="license.html">BSD license</a></li>
-</ul>
+</div></blockquote>
+</div>
+<div class="section" id="authorization">
+<h2>Authorization<a class="headerlink" href="#authorization" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="quick-start">
+<h3>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h3>
+<p>Before you may use oDesk APIs, you will need to obtain your pair of API keys.
+Visit the <a class="reference external" href="http://developers.odesk.com/Authentication#authentication">oDesk API Center documentation</a>
+for full details. Please note, that Flask-oDesk uses authorization via OAuth and it needs keys with auth type &#8220;OAuth&#8221;.</p>
+<p>Please make sure, that <cite>SECRET_KEY</cite> which is necessary for sessions, based on the secure cookies, is indicated in <cite>settings.py</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">&#39;(your random secret key)&#39;</span>
+</pre></div>
+</div>
+<p>You need to store your pair of oDesk API keys in <cite>settings.py</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ODESK_KEY</span> <span class="o">=</span> <span class="s">&#39;(your oDesk public key)&#39;</span>
+<span class="n">ODESK_SECRET</span> <span class="o">=</span> <span class="s">&#39;(your oDesk secret key)&#39;</span>
+</pre></div>
+</div>
+<p>You can also set the list of teams in <cite>settings.py</cite>, which will be able to authorize.
+If you do not specify this option or leave the list empty, then all oDesk users will be able to authorize:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ODESK_AUTH_TEAMS</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;odesk:odeskpsbootcamp&#39;</span><span class="p">,)</span>
+</pre></div>
+</div>
+<p>Please make sure, that you have registered odesk module in your <cite>app.py</cite> correctly.
+Please keep in mind, that <cite>url_prefix</cite> can be whatever you like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">flaskext.odesk</span> <span class="kn">import</span> <span class="n">odesk</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_pyfile</span><span class="p">(</span><span class="s">&#39;settings.py&#39;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">register_module</span><span class="p">(</span><span class="n">odesk</span><span class="p">,</span> <span class="n">url_prefix</span><span class="o">=</span><span class="s">&#39;/odesk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-authorization">
+<h3>Using authorization<a class="headerlink" href="#using-authorization" title="Permalink to this headline">¶</a></h3>
+<p>Please use the decorator <cite>login_required</cite> to close the access for anonymous users to the certain parts of your website:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/only/for/odesk/users&#39;</span><span class="p">)</span>
+<span class="nd">@odesk.login_required</span>
+<span class="k">def</span> <span class="nf">admin</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">&quot;Welcome, oDesk user!&quot;</span>
+</pre></div>
+</div>
+<p>If you want to indicate login or logout links in the template, than you can use <cite>url_for</cite> function and <cite>odesk_is_authorized</cite> variable:</p>
+<div class="highlight-python"><pre>{% if odesk_is_authorized %}
+  &lt;a href="{{ url_for('odesk.logout') }}"&gt;Log out&lt;/a&gt;
+{% else %}
+  &lt;a href="{{ url_for('odesk.login') }}"&gt;oDesk log in&lt;/a&gt;
+{% endif %}</pre>
+</div>
+<p>To check the authorization of the current user you can use <cite>is_authorized</cite> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/test&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">odesk</span><span class="o">.</span><span class="n">is_authorized</span><span class="p">():</span>
+        <span class="k">return</span> <span class="s">&quot;You are authorized.&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&quot;You are not authorized yet.&quot;</span>
+</pre></div>
+</div>
+<p>If you need, you can start the authorization process manually from your code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="ow">not</span> <span class="n">odesk</span><span class="o">.</span><span class="n">is_authorized</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">odesk</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can also use <cite>next</cite> parameter to indicate URL, where will be redirect after the authorization process ends:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="ow">not</span> <span class="n">odesk</span><span class="o">.</span><span class="n">is_authorized</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">odesk</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="nb">next</span><span class="o">=</span><span class="s">&#39;/blah/blah&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can use <cite>logout</cite> method for user&#8217;s logging out.
+Please pay attention, that unlike <cite>login</cite> this method do not return the bulk of redirects.
+It simply deletes the OAuth session. You should return response manually:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">odesk</span><span class="o">.</span><span class="n">is_authorized</span><span class="p">():</span>
+    <span class="n">odesk</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you want to expand autorization process, you can use <cite>after_login</cite> decorator,
+that indicates your function, which will be called after successfully authorization:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@odesk.after_login</span>
+<span class="k">def</span> <span class="nf">save_session</span><span class="p">():</span>
+    <span class="c"># Getting current user&#39;s data. Please, see below how to use the Client.</span>
+    <span class="n">session</span><span class="p">[</span><span class="s">&#39;user&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">odesk</span><span class="o">.</span><span class="n">get_client</span><span class="p">()</span><span class="o">.</span><span class="n">hr</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="s">&#39;me&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you have used <cite>after_login</cite> and saved something to the session, please,
+do not forget to delete this session after logging out, using decorator <cite>after_logout</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@odesk.after_logout</span>
+<span class="k">def</span> <span class="nf">delete_session</span><span class="p">():</span>
+    <span class="k">if</span> <span class="s">&#39;user&#39;</span> <span class="ow">in</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">session</span><span class="p">[</span><span class="s">&#39;user&#39;</span><span class="p">]</span>
+</pre></div>
 </div>
 </div>
 </div>
+<div class="section" id="using-client">
+<h2>Using client<a class="headerlink" href="#using-client" title="Permalink to this headline">¶</a></h2>
+<p>You can use <cite>get_access_token</cite> method to get the current access token and access token secret,
+that can be stored in DB and used for access to the client later, if necessary:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">odesk</span><span class="o">.</span><span class="n">is_authorized</span><span class="p">():</span>
+    <span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span> <span class="o">=</span> <span class="n">odesk</span><span class="o">.</span><span class="n">get_access_token</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can use <cite>get_client</cite> method to get the client:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">odesk</span><span class="o">.</span><span class="n">is_authorized</span><span class="p">():</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">odesk</span><span class="o">.</span><span class="n">get_client</span><span class="p">()</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">team</span><span class="o">.</span><span class="n">get_teamrooms</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Or you can use the client even if the current user is not authorized,
+but you have the access token and access token secret:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="ow">not</span> <span class="n">odesk</span><span class="o">.</span><span class="n">is_authorized</span><span class="p">():</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">odesk</span><span class="o">.</span><span class="n">get_client</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_token_secret</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">team</span><span class="o">.</span><span class="n">get_teamrooms</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="version-0-4-1">
+<span id="id1"></span><h3>Version 0.4.1<a class="headerlink" href="#version-0-4-1" title="Permalink to this headline">¶</a></h3>
+<p><em>June 2011</em></p>
+<ul class="simple">
+<li>Initial version (version keeped in sync with suitable python-odesk version)</li>
+</ul>
 <div class="section" id="urls">
-<h1>Urls<a class="headerlink" href="#urls" title="Permalink to this headline">¶</a></h1>
+<h4>Urls<a class="headerlink" href="#urls" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Git repo: <a class="reference external" href="https://github.com/odesk/flask-odesk">https://github.com/odesk/flask-odesk</a></li>
 <li>Issues: <a class="reference external" href="http://github.com/odesk/flask-odesk/issues">http://github.com/odesk/flask-odesk/issues</a></li>
@@ -82,57 +176,53 @@
 <li>Mailing list: <a class="reference external" href="http://groups.google.com/group/python-odesk">http://groups.google.com/group/python-odesk</a> (<a class="reference external" href="mailto:python-odesk&#37;&#52;&#48;googlegroups&#46;com">python-odesk<span>&#64;</span>googlegroups<span>&#46;</span>com</a>)</li>
 </ul>
 </div>
+<div class="section" id="bsd-license">
+<h4>BSD license<a class="headerlink" href="#bsd-license" title="Permalink to this headline">¶</a></h4>
+<p>Copyright (c) 2011, oDesk <a class="reference external" href="http://www.odesk.com">http://www.odesk.com</a></p>
+<p>All rights reserved.</p>
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.</li>
+<li>Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.</li>
+<li>Neither the name of oDesk nor the names of its contributors may
+be used to endorse or promote products derived from this software without
+specific prior written permission.</li>
+</ul>
+</div></blockquote>
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &#8220;AS IS&#8221; AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+</div>
+</div>
+</div>
+</div>
 
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Flask-oDesk</a><ul>
-<li><a class="reference internal" href="#flask-odesk-is-the-library-to-use-odesk-api-inside-flask-applications">Flask-oDesk is the library to use oDesk API inside Flask applications</a><ul>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#urls">Urls</a></li>
-</ul>
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="getting_started.html" title="next chapter">Flask-oDesk</a></li>
-  </ul></li>
-</ul>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
       <div class="clearer"></div>
     </div>
-  <div class="footer">
-    &copy; Copyright 2011, oDesk.
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
-  </div>
+  
+    <a href="http://github.com/''"><img style="position: fixed; top: 0; right: 0; border: 0;"
+    src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  
+
   
   </div>
   
+
   </body>
 </html>
