@@ -1,8 +1,11 @@
 .. sampledoc documentation master file
 
 ******************************************
-Library to use oDesk API in Flask apps
+Flask-oDesk
 ******************************************
+
+Flask-oDesk is the library to use oDesk API inside Flask applications
+-----------------------------------------------------------------------------
 
 .. toctree::
    :maxdepth: 2
