@@ -1,8 +1,12 @@
+
+======================
+
 Flask-oDesk
-===========
+======================
+
 
 Requirements
-============
+======================
 
     * `flask`
     * `python-odesk`
@@ -10,7 +14,7 @@ Requirements
 
 
 Authorization
-==============
+======================
 
 Quick start
 -----------
@@ -109,7 +113,7 @@ do not forget to delete this session after logging out, using decorator `after_l
 
 
 Using client
-============
+======================
 
 You can use `get_access_token` method to get the current access token and access token secret,
 that can be stored in DB and used for access to the client later, if necessary::
