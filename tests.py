@@ -1,16 +1,27 @@
+"""
+Flask-oDesk
+-----------
+Adds oDesk API support to Flask.
+
+flask-odesk version 0.4.1
+(C) 2011 oDesk
+"""
+
 from flask import Flask, url_for
 from flaskext.odesk import odesk
 from mock import patch
 import unittest
-
+import odesk as python_odesk
+import oauth2 as oauth
 
 class ODeskTestCase(unittest.TestCase):
 
     def setUp(self):
         app = Flask(__name__)
         app.config['SECRET_KEY'] = 'blahblah'
-        app.config['ODESK_KEY'] = '56adf4b66aaf61444a77796c17c0da53'
-        app.config['ODESK_SECRET'] = 'e5864a0bcbed2085'
+        app.config['ODESK_KEY'] = 'some_key'
+        app.config['ODESK_SECRET'] = 'some_secret'
+        app.debug = True
         app.register_module(odesk, url_prefix='/odesk')
         ctx = app.test_request_context()
         ctx.push()
@@ -26,19 +37,24 @@ class ODeskTestCase(unittest.TestCase):
 
     def test_login_required(self):
 
-        def patched_httplib2_request(*args, **kwargs):
-            return {'status': '200'}, 'oauth_callback_confirmed=1&oauth_token=709d434e6b37a25c50e95b0e57d24c46&oauth_token_secret=193ef27f57ab4e37'
-
-        def patched_httplib2_access(*args, **kwargs):
-            return {'status': '200'}, 'oauth_token=aedec833d41732a584d1a5b4959f9cd6&oauth_token_secret=9d9cccb363d2b13e'
+        def patched_oauth_client_request(*args, **kwargs):
+            return {'status': '200'},\
+                'oauth_callback_confirmed=1&oauth_token=token&oauth_token_secret=secret'
 
         def patched_get_authorize_url(*args, **kwargs):
-            return url_for('odesk.complete', next='/admin', oauth_verifier='590b901a040d76453da588bf5a8601e9')
+            return url_for('odesk.complete', next='/admin',\
+                oauth_verifier='verifier')
+
+        def patched_get_request_token(*args, **kwargs):
+            return 'request_token', 'request_token_secret'
+
+        def patched_get_get_access_token(*args, **kwargs):
+            return 'access_token', 'access_token_secret'
 
         @self.app.route('/admin')
-        @patch('httplib2.Http.request', patched_httplib2_request)
         @patch('odesk.oauth.OAuth.get_authorize_url', patched_get_authorize_url)
-        @patch('httplib2.Http.request', patched_httplib2_access)
+        @patch('odesk.oauth.OAuth.get_request_token', patched_get_request_token)
+        @patch('odesk.oauth.OAuth.get_access_token', patched_get_get_access_token)
         @odesk.login_required
         def admin():
             self.odesk_is_authorized = odesk.is_authorized()
@@ -47,10 +63,11 @@ class ODeskTestCase(unittest.TestCase):
             self.odesk_is_not_authorized = odesk.is_authorized()
             return "Welcome, oDesk user!"
 
+        oauth.Client.request = patched_oauth_client_request
         response = self.tc.get('/admin', follow_redirects=True)
-        assert "Welcome" in response.data
+        assert "Welcome" in response.data, response.data
         assert self.odesk_is_authorized == True
-        assert self.odesk_access_token == ('aedec833d41732a584d1a5b4959f9cd6', '9d9cccb363d2b13e')
+        assert self.odesk_access_token == ('token', 'secret')
         assert self.odesk_is_not_authorized == False
 
 

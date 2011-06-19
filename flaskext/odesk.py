@@ -9,7 +9,8 @@ flask-odesk version 0.4.1
 
 from __future__ import absolute_import
 from functools import wraps
-from flask import Flask, Module, request, redirect, session, flash, url_for, current_app
+from flask import Flask, Module, request, redirect, session, flash,\
+    url_for, current_app
 from odesk import Client
 
 
@@ -56,7 +57,8 @@ def get_client(*access_token):
     if access_token:
         c.oauth_access_token, c.oauth_access_token_secret = access_token
     elif ODESK_ACCESS_TOKEN in session:
-        c.oauth_access_token, c.oauth_access_token_secret = session.get(ODESK_ACCESS_TOKEN, [None]*2)
+        c.oauth_access_token, c.oauth_access_token_secret = session.get(\
+            ODESK_ACCESS_TOKEN, [None]*2)
     return c
 odesk.get_client = get_client
 
@@ -76,7 +78,8 @@ odesk.login_required = login_required
 
 def after_login(f):
     """
-    Decorator that indicates function, which will be called after successfully authorization
+    Decorator that indicates function, which will be called after successfully
+    authorization
     """
     odesk.after_login_func = f
     return f
@@ -99,7 +102,8 @@ def login(next=None):
     """
     c = get_client()
     session[ODESK_REQUEST_TOKEN] = c.auth.get_request_token()
-    return redirect(c.auth.get_authorize_url(url_for('odesk.complete', next=request.args.get('next', next), _external=True)))
+    return redirect(c.auth.get_authorize_url(url_for('odesk.complete',\
+        next=request.args.get('next', next), _external=True)))
 odesk.login = login
 
 
@@ -109,13 +113,19 @@ def complete():
     End authorization process
     """
     c = get_client()
-    c.auth.request_token, c.auth.request_token_secret = session.get(ODESK_REQUEST_TOKEN, [None]*2)
+    c.auth.request_token, c.auth.request_token_secret = session.get(\
+        ODESK_REQUEST_TOKEN, [None]*2)
     if ODESK_REQUEST_TOKEN in session:
         del session[ODESK_REQUEST_TOKEN]
+    access_token = c.auth.get_access_token(\
+            request.args.get('oauth_verifier'))
+
     try:
-        access_token = c.auth.get_access_token(request.args.get('oauth_verifier'))
+        access_token = c.auth.get_access_token(\
+            request.args.get('oauth_verifier'))
     except Exception, e:
         return e, 401
+
     authteams = current_app.config.get('ODESK_AUTH_TEAMS', ())
     if authteams:
         c.oauth_access_token, c.oauth_access_token_secret = access_token
