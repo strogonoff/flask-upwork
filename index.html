@@ -50,8 +50,9 @@
             
   <div class="section" id="flask-odesk">
 <h1>Flask-oDesk<a class="headerlink" href="#flask-odesk" title="Permalink to this headline">¶</a></h1>
+</div>
 <div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h1>
 <blockquote>
 <div><ul class="simple">
 <li><cite>flask</cite></li>
@@ -61,9 +62,9 @@
 </div></blockquote>
 </div>
 <div class="section" id="authorization">
-<h2>Authorization<a class="headerlink" href="#authorization" title="Permalink to this headline">¶</a></h2>
+<h1>Authorization<a class="headerlink" href="#authorization" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="quick-start">
-<h3>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h3>
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
 <p>Before you may use oDesk APIs, you will need to obtain your pair of API keys.
 Visit the <a class="reference external" href="http://developers.odesk.com/Authentication#authentication">oDesk API Center documentation</a>
 for full details. Please note, that Flask-oDesk uses authorization via OAuth and it needs keys with auth type &#8220;OAuth&#8221;.</p>
@@ -93,7 +94,7 @@ Please keep in mind, that <cite>url_prefix</cite> can be whatever you like:</p>
 </div>
 </div>
 <div class="section" id="using-authorization">
-<h3>Using authorization<a class="headerlink" href="#using-authorization" title="Permalink to this headline">¶</a></h3>
+<h2>Using authorization<a class="headerlink" href="#using-authorization" title="Permalink to this headline">¶</a></h2>
 <p>Please use the decorator <cite>login_required</cite> to close the access for anonymous users to the certain parts of your website:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/only/for/odesk/users&#39;</span><span class="p">)</span>
 <span class="nd">@odesk.login_required</span>
@@ -154,7 +155,7 @@ do not forget to delete this session after logging out, using decorator <cite>af
 </div>
 </div>
 <div class="section" id="using-client">
-<h2>Using client<a class="headerlink" href="#using-client" title="Permalink to this headline">¶</a></h2>
+<h1>Using client<a class="headerlink" href="#using-client" title="Permalink to this headline">¶</a></h1>
 <p>You can use <cite>get_access_token</cite> method to get the current access token and access token secret,
 that can be stored in DB and used for access to the client later, if necessary:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">odesk</span><span class="o">.</span><span class="n">is_authorized</span><span class="p">():</span>
@@ -176,9 +177,9 @@ but you have the access token and access token secret:</p>
 </div>
 </div>
 <div class="section" id="changelog">
-<h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="version-0-4-1">
-<span id="id1"></span><h3>Version 0.4.1<a class="headerlink" href="#version-0-4-1" title="Permalink to this headline">¶</a></h3>
+<span id="id1"></span><h2>Version 0.4.1<a class="headerlink" href="#version-0-4-1" title="Permalink to this headline">¶</a></h2>
 <p><em>June 2011</em></p>
 <ul class="simple">
 <li>Initial version (version keeped in sync with suitable python-odesk version)</li>
@@ -186,7 +187,7 @@ but you have the access token and access token secret:</p>
 </div>
 </div>
 <div class="section" id="urls">
-<h2>Urls<a class="headerlink" href="#urls" title="Permalink to this headline">¶</a></h2>
+<h1>Urls<a class="headerlink" href="#urls" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>Git repo: <a class="reference external" href="https://github.com/odesk/flask-odesk">https://github.com/odesk/flask-odesk</a></li>
 <li>Issues: <a class="reference external" href="http://github.com/odesk/flask-odesk/issues">http://github.com/odesk/flask-odesk/issues</a></li>
@@ -195,7 +196,7 @@ but you have the access token and access token secret:</p>
 </ul>
 </div>
 <div class="section" id="bsd-license">
-<h2>BSD license<a class="headerlink" href="#bsd-license" title="Permalink to this headline">¶</a></h2>
+<h1>BSD license<a class="headerlink" href="#bsd-license" title="Permalink to this headline">¶</a></h1>
 <p>Copyright (c) 2011, oDesk <a class="reference external" href="http://www.odesk.com">http://www.odesk.com</a></p>
 <p>All rights reserved.</p>
 <p>Redistribution and use in source and binary forms, with or without
@@ -223,7 +224,6 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 </div>
-</div>
 
 
           </div>
@@ -233,7 +233,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Flask-oDesk</a><ul>
+<li><a class="reference internal" href="#">Flask-oDesk</a></li>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
 <li><a class="reference internal" href="#authorization">Authorization</a><ul>
 <li><a class="reference internal" href="#quick-start">Quick start</a></li>
@@ -247,8 +247,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 </li>
 <li><a class="reference internal" href="#urls">Urls</a></li>
 <li><a class="reference internal" href="#bsd-license">BSD license</a></li>
-</ul>
-</li>
 </ul>
 <h3>Related Topics</h3>
 <ul>
