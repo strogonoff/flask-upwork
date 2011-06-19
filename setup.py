@@ -14,7 +14,7 @@ readme = open(os.path.join(os.path.dirname(__file__), 'README'))
 README = readme.read()
 readme.close()
 
-version = __import__('odesk').get_version()
+version = __import__('flaskext').get_version()
 
 setup(
     name='Flask-oDesk',

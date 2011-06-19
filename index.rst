@@ -1,9 +1,12 @@
-===========
+
+======================
+
 Flask-oDesk
-===========
+****************
+
 
 Requirements
-============
+****************
 
     * `flask`
     * `python-odesk`
@@ -11,7 +14,7 @@ Requirements
 
 
 Authorization
-==============
+****************
 
 Quick start
 -----------
@@ -110,7 +113,7 @@ do not forget to delete this session after logging out, using decorator `after_l
 
 
 Using client
-============
+****************
 
 You can use `get_access_token` method to get the current access token and access token secret,
 that can be stored in DB and used for access to the client later, if necessary::
@@ -132,9 +135,9 @@ but you have the access token and access token secret::
         c.team.get_teamrooms()
 
 
-***************
+
 Changelog
-***************
+****************
 
 ..
 
@@ -147,10 +150,8 @@ Version 0.4.1
 * Initial version (version keeped in sync with suitable python-odesk version)
 
 
-
-*********************
 Urls
-*********************
+****************
 
 * Git repo: https://github.com/odesk/flask-odesk
 * Issues: http://github.com/odesk/flask-odesk/issues
@@ -158,10 +159,8 @@ Urls
 * Mailing list: http://groups.google.com/group/python-odesk (python-odesk@googlegroups.com)
 
 
-
-***************
 BSD license
-***************
+****************
 
 Copyright (c) 2011, oDesk http://www.odesk.com
 
