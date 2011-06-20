@@ -18,7 +18,7 @@ version = __import__('flaskext').get_version()
 
 setup(
     name='Flask-oDesk',
-    version='0.4.1',
+    version='0.4.1.1',
     download_url ='http://github.com/odesk/flask-odesk',
     url='https://github.com/odesk/flask-odesk',
     license='BSD',
