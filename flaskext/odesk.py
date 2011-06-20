@@ -117,9 +117,6 @@ def complete():
         ODESK_REQUEST_TOKEN, [None]*2)
     if ODESK_REQUEST_TOKEN in session:
         del session[ODESK_REQUEST_TOKEN]
-    access_token = c.auth.get_access_token(\
-            request.args.get('oauth_verifier'))
-
     try:
         access_token = c.auth.get_access_token(\
             request.args.get('oauth_verifier'))
