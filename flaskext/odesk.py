@@ -9,7 +9,7 @@ flask-odesk version 0.4.1
 
 from __future__ import absolute_import
 from functools import wraps
-from flask import Flask, Module, request, redirect, session, flash,\
+from flask import Module, request, redirect, session, flash,\
     url_for, current_app
 from odesk import Client
 
@@ -40,7 +40,7 @@ def get_access_token():
     """
     Get current access token and access token secret
     """
-    return session.get(ODESK_ACCESS_TOKEN, [None]*2)
+    return session.get(ODESK_ACCESS_TOKEN, [None] * 2)
 odesk.get_access_token = get_access_token
 
 
@@ -52,13 +52,14 @@ def get_client(*access_token):
         key = current_app.config['ODESK_KEY']
         secret = current_app.config['ODESK_SECRET']
     except KeyError:
-        raise Exception("ODESK_KEY and ODESK_SECRET were not found in app.config")
+        raise Exception(\
+                    "ODESK_KEY and ODESK_SECRET were not found in app.config")
     c = Client(key, secret, auth='oauth')
     if access_token:
         c.oauth_access_token, c.oauth_access_token_secret = access_token
     elif ODESK_ACCESS_TOKEN in session:
         c.oauth_access_token, c.oauth_access_token_secret = session.get(\
-            ODESK_ACCESS_TOKEN, [None]*2)
+            ODESK_ACCESS_TOKEN, [None] * 2)
     return c
 odesk.get_client = get_client
 
@@ -114,7 +115,7 @@ def complete():
     """
     c = get_client()
     c.auth.request_token, c.auth.request_token_secret = session.get(\
-        ODESK_REQUEST_TOKEN, [None]*2)
+        ODESK_REQUEST_TOKEN, [None] * 2)
     if ODESK_REQUEST_TOKEN in session:
         del session[ODESK_REQUEST_TOKEN]
     try:
