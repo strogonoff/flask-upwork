@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Flask-odesk documentation build configuration file, created by
+# Flask-Upwork documentation build configuration file, created by
 # sphinx-quickstart on Tue Apr 27 12:07:50 2010.
 #
 # This file is execfile()d with the current directory set to its containing
@@ -42,8 +42,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Flask-oDesk'
-copyright = u'2011, oDesk'
+project = u'Flask-Upwork'
+copyright = u'2015, Upwork'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

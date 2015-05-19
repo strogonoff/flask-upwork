@@ -1,17 +1,16 @@
 """
-Flask-oDesk
+Flask-Upwork
 -----------
-Adds oDesk API support to Flask.
+Adds Upwork API support to Flask.
 
-flask-odesk version 0.4.1
-(C) 2011 oDesk
+flask-upwork version 1.0
 """
 
 from __future__ import absolute_import
 from functools import wraps
 from flask import Module, request, redirect, session, flash,\
     url_for, current_app
-from odesk import Client
+from upwork import Client
 
 
 ODESK_REQUEST_TOKEN = '_ort'
@@ -46,7 +45,7 @@ odesk.get_access_token = get_access_token
 
 def get_client(*access_token):
     """
-    Get oDesk Client instance
+    Get Upwork Client instance
     """
     try:
         key = current_app.config['ODESK_KEY']
@@ -141,7 +140,7 @@ def complete():
 
 def log_out():
     """
-    Delete oDesk session and log out current user
+    Delete Upwork session and log out current user
     """
     if ODESK_ACCESS_TOKEN in session:
         del session[ODESK_ACCESS_TOKEN]

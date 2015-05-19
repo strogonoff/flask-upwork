@@ -1,14 +1,13 @@
 """
-Flask-oDesk
+Flask-Upwork
 -----------
-Adds oDesk API support to Flask.
+Adds Upwork API support to Flask.
 
-flask-odesk version 0.4.1
-(C) 2011 oDesk
+flask-upwork version 1.0
 """
 __import__('pkg_resources').declare_namespace(__name__)
 
-VERSION = (0, 4, 1, 'beta', 6)
+VERSION = (1, 0, 0, 'beta', 1)
 
 
 def get_version():

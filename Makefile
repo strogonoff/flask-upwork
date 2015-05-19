@@ -89,7 +89,7 @@ doctest:
 	@echo "Testing of doctests in the sources finished, look at the " \
 		  "results in $(BUILDDIR)/doctest/output.txt."
 
-project=python-odesk
+project=python-upwork
 TMPDIR=/tmp
 docs_dir=$(TMPDIR)/$(project)-docs
 

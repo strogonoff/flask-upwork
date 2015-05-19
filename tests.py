@@ -1,17 +1,16 @@
 """
-Flask-oDesk
+Flask-Upwork
 -----------
-Adds oDesk API support to Flask.
+Adds Upwork support to Flask.
 
-flask-odesk version 0.4.1
-(C) 2011 oDesk
+flask-upwork version 1.0
 """
 
 from flask import Flask, url_for
 from flaskext.odesk import odesk
 from mock import patch
 import unittest
-import odesk as python_odesk
+import upwork as python_odesk
 import oauth2 as oauth
 
 class ODeskTestCase(unittest.TestCase):
@@ -61,7 +60,7 @@ class ODeskTestCase(unittest.TestCase):
             self.odesk_access_token = odesk.get_access_token()
             odesk.logout()
             self.odesk_is_not_authorized = odesk.is_authorized()
-            return "Welcome, oDesk user!"
+            return "Welcome, Upwork user!"
 
         oauth.Client.request = patched_oauth_client_request
         response = self.tc.get('/admin', follow_redirects=True)

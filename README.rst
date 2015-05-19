@@ -1,12 +1,12 @@
-===========
-Flask-oDesk
-===========
+============
+Flask-Upwork
+============
 
 Requirements
 ============
 
     * `flask`
-    * `python-odesk`
+    * `python-upwork`
     * `python-oauth2`
 
 
@@ -16,27 +16,27 @@ Authorization
 Quick start
 -----------
 
-Before you may use oDesk APIs, you will need to obtain your pair of API keys.
-Visit the `oDesk API Center documentation <http://developers.odesk.com/Authentication#authentication>`_
-for full details. Please note, that Flask-oDesk uses authorization via OAuth and it needs keys with auth type "OAuth".
+Before you may use Upwork APIs, you will need to obtain your pair of API keys.
+Visit the `Upwork API Center documentation <http://developers.upwork.com/Authentication#authentication>`_
+for full details. Please note, that Flask-Upwork uses authorization via OAuth and it needs keys with auth type "OAuth".
 
 Please make sure, that `SECRET_KEY` which is necessary for sessions, based on the secure cookies, is indicated in `settings.py`:: 
 
     SECRET_KEY = '(your random secret key)'
 
-You need to store your pair of oDesk API keys in `settings.py`::
+You need to store your pair of Upwork API keys in `settings.py`::
 
-    ODESK_KEY = '(your oDesk public key)'
-    ODESK_SECRET = '(your oDesk secret key)'
+    ODESK_KEY = '(your Upwork public key)'
+    ODESK_SECRET = '(your Upwork secret key)'
 
 You can also set the list of teams in `settings.py`, which will be able to authorize.
-If you do not specify this option or leave the list empty, then all oDesk users will be able to authorize::
+If you do not specify this option or leave the list empty, then all Upwork users will be able to authorize::
 
 
-    ODESK_AUTH_TEAMS = ('odesk:odeskpsbootcamp',)
+    ODESK_AUTH_TEAMS = ('teamname',)
 
-Please make sure, that you have registered odesk module in your `app.py` correctly.
-Please keep in mind, that `url_prefix` can be whatever you like::
+Please make sure that you have registered Upwork module in your `app.py` correctly.
+Please keep in mind that `url_prefix` can be whatever you like::
 
     from flask import Flask
     from flaskext.odesk import odesk
@@ -55,14 +55,14 @@ Please use the decorator `login_required` to close the access for anonymous user
     @app.route('/only/for/odesk/users')
     @odesk.login_required
     def admin():
-        return "Welcome, oDesk user!"
+        return "Welcome, Upwork user!"
 
 If you want to indicate login or logout links in the template, than you can use `url_for` function and `odesk_is_authorized` variable::
 
     {% if odesk_is_authorized %}
       <a href="{{ url_for('odesk.logout') }}">Log out</a>
     {% else %}
-      <a href="{{ url_for('odesk.login') }}">oDesk log in</a>
+      <a href="{{ url_for('odesk.login') }}">Upwork log in</a>
     {% endif %}
 
 To check the authorization of the current user you can use `is_authorized` method::

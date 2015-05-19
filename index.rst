@@ -1,4 +1,4 @@
-Flask-oDesk
+Flask-Upwork
 ****************
 
 
@@ -6,7 +6,7 @@ Requirements
 ****************
 
     * `flask`
-    * `python-odesk`
+    * `python-upwork`
     * `python-oauth2`
 
 
@@ -16,26 +16,26 @@ Authorization
 Quick start
 -----------
 
-Before you may use oDesk APIs, you will need to obtain your pair of API keys.
-Visit the `oDesk API Center documentation <http://developers.odesk.com/Authentication#authentication>`_
-for full details. Please note, that Flask-oDesk uses authorization via OAuth and it needs keys with auth type "OAuth".
+Before you may use Upwork APIs, you will need to obtain your pair of API keys.
+Visit the `Upwork API Center documentation <http://developers.upwork.com/Authentication#authentication>`_
+for full details. Please note, that Flask-Upwork uses authorization via OAuth and it needs keys with auth type "OAuth".
 
 Please make sure, that `SECRET_KEY` which is necessary for sessions, based on the secure cookies, is indicated in `settings.py`::
 
     SECRET_KEY = '(your random secret key)'
 
-You need to store your pair of oDesk API keys in `settings.py`::
+You need to store your pair of Upwork API keys in `settings.py`::
 
-    ODESK_KEY = '(your oDesk public key)'
-    ODESK_SECRET = '(your oDesk secret key)'
+    ODESK_KEY = '(your Upwork public key)'
+    ODESK_SECRET = '(your Upwork secret key)'
 
 You can also set the list of teams in `settings.py`, which will be able to authorize.
-If you do not specify this option or leave the list empty, then all oDesk users will be able to authorize::
+If you do not specify this option or leave the list empty, then all Upwork users will be able to authorize::
 
 
-    ODESK_AUTH_TEAMS = ('odesk:odeskpsbootcamp',)
+    ODESK_AUTH_TEAMS = ('teamname',)
 
-Please make sure, that you have registered odesk module in your `app.py` correctly.
+Please make sure, that you have registered upwork module in your `app.py` correctly.
 Please keep in mind, that `url_prefix` can be whatever you like::
 
     from flask import Flask
@@ -55,14 +55,14 @@ Please use the decorator `login_required` to close the access for anonymous user
     @app.route('/only/for/odesk/users')
     @odesk.login_required
     def admin():
-        return "Welcome, oDesk user!"
+        return "Welcome, Upwork user!"
 
 If you want to indicate login or logout links in the template, than you can use `url_for` function and `odesk_is_authorized` variable::
 
     {% if odesk_is_authorized %}
       <a href="{{ url_for('odesk.logout') }}">Log out</a>
     {% else %}
-      <a href="{{ url_for('odesk.login') }}">oDesk log in</a>
+      <a href="{{ url_for('odesk.login') }}">Upwork log in</a>
     {% endif %}
 
 To check the authorization of the current user you can use `is_authorized` method::
@@ -136,7 +136,13 @@ but you have the access token and access token secret::
 Changelog
 ****************
 
-..
+.. _1.0:
+
+Version 1.0
+-----------
+*May 2015*
+
+* Switched to python-upwork library from python-odesk after company rebranding
 
 .. _0.4.1:
 
@@ -150,39 +156,5 @@ Version 0.4.1
 Urls
 ****************
 
-* Git repo: https://github.com/odesk/flask-odesk
-* Issues: http://github.com/odesk/flask-odesk/issues
-* Documentation: http://odesk.github.com/flask-odesk/
-* Mailing list: http://groups.google.com/group/python-odesk (python-odesk@googlegroups.com)
-
-
-BSD license
-****************
-
-Copyright (c) 2011, oDesk http://www.odesk.com
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
- * Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
- * Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
- * Neither the name of oDesk nor the names of its contributors may
-   be used to endorse or promote products derived from this software without
-   specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+* Git repo: https://github.com/strogonoff/flask-upwork
+* Issues: http://github.com/strogonoff/flask-upwork/issues
