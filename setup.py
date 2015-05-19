@@ -1,10 +1,10 @@
 """
-Flask-oDesk
+Flask-Upwork
 -----------
-Adds oDesk API support to Flask.
+Adds Upwork API support to Flask.
 
-flask-odesk version 0.4.1
-(C) 2011 oDesk
+flask-upwork version 1.0
+(C) 2015 Upwork
 """
 
 import os
@@ -17,16 +17,16 @@ readme.close()
 version = __import__('flaskext').get_version()
 
 setup(
-    name='Flask-oDesk',
+    name='Flask-Upwork',
     version='0.4.1.1',
-    download_url='http://github.com/odesk/flask-odesk',
-    url='https://github.com/odesk/flask-odesk',
+    download_url='http://github.com/strogonoff/flask-upwork',
+    url='https://github.com/strogonoff/flask-upwork',
     license='BSD',
     author='Artem Gnilov',
     author_email='boobsd@gmail.com',
-    maintainer='Volodymyr Hotsyk',
-    maintainer_email='gotsyk@gmail.com',
-    description='oDesk API support to Flask',
+    maintainer='Volodymyr Hotsyk, Anton Strogonoff',
+    maintainer_email='gotsyk@gmail.com, astrogov@upwork.com',
+    description='Upwork API support to Flask',
     long_description=README,
     packages=['flaskext'],
     namespace_packages=['flaskext'],
@@ -35,7 +35,7 @@ setup(
     install_requires=[
         'Flask',
         'oauth2',
-        'python-odesk>=0.4'
+        'python-upwork>=1.0'
     ],
     test_suite='tests',
     classifiers=[
