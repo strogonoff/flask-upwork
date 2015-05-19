@@ -18,7 +18,7 @@ version = __import__('flaskext').get_version()
 
 setup(
     name='Flask-Upwork',
-    version='0.4.1.1',
+    version='1.0',
     download_url='http://github.com/strogonoff/flask-upwork',
     url='https://github.com/strogonoff/flask-upwork',
     license='BSD',
