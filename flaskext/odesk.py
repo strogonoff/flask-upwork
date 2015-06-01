@@ -53,7 +53,7 @@ def get_client(*access_token):
     except KeyError:
         raise Exception(\
                     "ODESK_KEY and ODESK_SECRET were not found in app.config")
-    c = Client(key, secret, auth='oauth')
+    c = Client(key, secret)
     if access_token:
         c.oauth_access_token, c.oauth_access_token_secret = access_token
     elif ODESK_ACCESS_TOKEN in session:
