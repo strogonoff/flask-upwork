@@ -7,7 +7,7 @@ flask-upwork version 1.0
 """
 __import__('pkg_resources').declare_namespace(__name__)
 
-VERSION = (1, 0, 0, 'pre', 1)
+VERSION = (1, 0, 0, 'pre', 2)
 
 
 def get_version():
